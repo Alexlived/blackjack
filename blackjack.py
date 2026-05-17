@@ -9,7 +9,29 @@ deck.shuffle()
 class Player:
     def __init__(self, h):
         self.hand = h
-        self.total_value = self.value()
+
+    def handle_aces_pls(self):
+        list_of_cards = self.hand.cards
+        dupe_list_of_cards = list_of_cards[:]
+        ace_list = []
+        for card in dupe_list_of_cards:
+            if card.value == "ace":
+                ace_list.append(dupe_list_of_cards.pop(card))
+            else:
+                pass
+            aceless_value = 0
+            for card in dupe_list_of_cards:
+                try:
+                    aceless_value += int(card.value)
+                except ValueError:
+                    aceless_value += 10
+
+            if len(ace_list) != 0:
+                for i in range(len(ace_list)):
+                    if aceless_value + 11 > 21:
+                        return 1
+            else:
+                return 11
 
     def value(self):
         total_value = 0
@@ -18,10 +40,7 @@ class Player:
                 total_value += int(card.value)
             except ValueError:
                 if card.value == "ace":
-                    if total_value + 11 > 21:
-                        total_value += 1
-                    else:
-                        total_value += 11
+                    total_value += self.handle_aces_pls()
                 else:
                     total_value += 10
 
@@ -35,38 +54,6 @@ class Player:
 
 def hit(hand):
     hand.take_card(deck.deal_card())
-
-
-def computer_computing(hand, player):
-    # if player.value() > 17:
-    #     comp_choice = True
-
-    # else:
-    list_of_cards = player(hand).hand.cards
-    dupe_list_of_cards = list_of_cards[:]
-    ace_list = []
-    for card in dupe_list_of_cards:
-        if card.value == 'ace':
-            ace_list.append(dupe_list_of_cards.pop(card))
-        else:
-            pass
-        aceless_value = 0
-        for card in dupe_list_of_cards:
-            try:
-                aceless_value += int(card.value)
-            except ValueError:
-                aceless_value += 10
-
-        if len(ace_list) != 0:
-            for i in range(len(ace_list));
-                if aceless_value+11 > 21:
-                    
-            
-                    
-                    
-                
-
-    
 
 
 def readable_cards(hand):
@@ -109,7 +96,6 @@ def game():
 
     while computer_computing(computer_hand, computer):
         hit(computer_hand)
-    
 
     print()
     print(
