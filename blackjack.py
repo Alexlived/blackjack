@@ -40,7 +40,7 @@ class Player:
         for card in self.hand.cards:
             if card.value.is_digit():
                 t_value += int(card.value)
-            elif card.value.lower() in ('king','jack','queen'):
+            elif card.value.lower() in ("king", "jack", "queen"):
                 t_value += 10
             else:
                 t_value += 11
@@ -48,10 +48,7 @@ class Player:
         if t_value > 21:
             for i in range(aces):
                 t_value -= 10
-            
-                
-                
-            
+
     # def value(self):
     #     total_value = 0
     #     for card in self.hand.cards:
@@ -64,9 +61,6 @@ class Player:
     #                 total_value += 10
 
     #     return total_value
-
-    def bust(self):
-        
 
 
 def hit(hand):
@@ -145,9 +139,6 @@ def game():
 game()
 
 
-    
-
-
 # def game_2():
 #     player_hand = Hand()
 #     computer_hand = Hand()
@@ -191,4 +182,3 @@ game()
 #                 hit(computer_hand)
 #             else:
 #                 break
-    
