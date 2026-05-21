@@ -40,9 +40,7 @@ def readable_cards(hand):
 
 
 def bust(player):
-    if player.score() > 21:
-        return True
-    return False
+    return player.score() > 21  
 
 
 def game_1():
@@ -53,8 +51,6 @@ def game_1():
     for i in range(2):
         player_hand.take_card(deck.deal_card())
         computer_hand.take_card(deck.deal_card())
-    computer = Player(computer_hand)
-    player = Player(player_hand)
     if computer.score() == 21:
         if player.score() == 21:
             print("Push!")
@@ -72,7 +68,7 @@ def game_1():
         print(f"The dealers upcard is {computer_cards[0]}")
         print()
         player_choice = str(input("Would you like to hit?[y/n]: ")).lower()[0]
-        if player_choice == "y":
+        if player_choice and [0] == "y":
             hit(player_hand)
             player_cards.append(str(player_hand.cards[-1]))
             if bust(player):
@@ -82,28 +78,28 @@ def game_1():
                 pass
         else:
             break
-        while True:
-                if computer.score() < 17:
-                    hit(computer_hand)
-                    if bust(computer):
-                        print("The dealer busted!")
-                        quit()
-                    else:
-                        pass
+    while True:
+        if computer.score() < 17:
+            hit(computer_hand)
+            if bust(computer):
+                print("The dealer busted!")
+                quit()
+            else:
+                pass
+        else:
+            ace_count = 0
+            for card in computer_hand.cards:
+                if card.value == "ace":
+                    ace_count += 1
+            if computer.score() == 17 and ace_count > 0:
+                hit(computer_hand)
+                if bust(computer):
+                    print("The dealer busted!")
+                    quit()
                 else:
-                    ace_count = 0
-                    for card in computer_hand.cards:
-                        if card.value == "ace":
-                            ace_count += 1
-                    if computer.score() == 17 and ace_count > 0:
-                        hit(computer_hand)
-                        if bust(computer):
-                            print("The dealer busted!")
-                            quit()
-                        else:
-                            pass
-                    else:
-                        break
+                    pass
+            else:
+                break
     print()
     print(f"The dealer's final hand is {','.join(readable_cards(computer_hand))}")
     print()
