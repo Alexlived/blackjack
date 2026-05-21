@@ -55,8 +55,8 @@ def game_1():
         computer_hand.take_card(deck.deal_card())
     computer = Player(computer_hand)
     player = Player(player_hand)
-    if computer.score == 21:
-        if player.score == 21:
+    if computer.score() == 21:
+        if player.score() == 21:
             print("Push!")
             quit()
         else:
@@ -82,32 +82,32 @@ def game_1():
                 pass
         else:
             break
-    while True:
-        if computer.score() < 17:
-            hit(computer_hand)
-            if bust(computer):  # Bust Logic
-                print("The dealer busted!")
-                quit()  # <-- Til here
-            else:
-                pass
-        else:
-            ace_count = 0
-            for card in computer_hand.cards:
-                if card.value == "ace":
-                    ace_count += 1
-            if ace_count > 0:
-                hit(computer_hand)
-                if bust(computer):  # Bust Logic
-                    print("The dealer busted!")
-                    quit()  # <-- Til here
+        while True:
+                if computer.score() < 17:
+                    hit(computer_hand)
+                    if bust(computer):
+                        print("The dealer busted!")
+                        quit()
+                    else:
+                        pass
                 else:
-                    pass
-            else:
-                break
+                    ace_count = 0
+                    for card in computer_hand.cards:
+                        if card.value == "ace":
+                            ace_count += 1
+                    if computer.score() == 17 and ace_count > 0:
+                        hit(computer_hand)
+                        if bust(computer):
+                            print("The dealer busted!")
+                            quit()
+                        else:
+                            pass
+                    else:
+                        break
     print()
-    print(f"The dealer's final hand is {','.join(computer_cards)}")
+    print(f"The dealer's final hand is {','.join(readable_cards(computer_hand))}")
     print()
-    print(f"Your final hand is {','.join(player_cards)}")
+    print(f"Your final hand is {','.join(readable_cards(player_hand))}")
     if computer.score() > player.score():
         print("The dealer wins!")
     elif computer.score() < player.score():

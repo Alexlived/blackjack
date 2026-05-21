@@ -16,7 +16,6 @@ class Card:
 class Deck:
     suits = ["spades", "clubs", "diamonds", "hearts"]
     values = [
-        "1",
         "2",
         "3",
         "4",
